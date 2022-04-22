@@ -14,3 +14,7 @@
 
 # direnv cache
 .direnv
+
+# jetbrains ide
+.idea/
+target
