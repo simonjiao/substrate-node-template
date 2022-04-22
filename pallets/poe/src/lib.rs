@@ -107,9 +107,10 @@ pub mod pallet {
 
 			if sender != receiver {
 				let block_number = <frame_system::Pallet<T>>::block_number();
-				// TODO: one-liner
-				Proofs::<T>::remove(&proof);
-				Proofs::<T>::insert(&proof, (&receiver, block_number));
+				Proofs::<T>::mutate(&proof, |value| {
+					value.as_mut().unwrap().0 = receiver.clone();
+					value.as_mut().unwrap().1 = block_number;
+				});
 			}
 
 			Self::deposit_event(Event::ClaimTransfered(sender, receiver, proof));
